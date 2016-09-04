@@ -8,8 +8,9 @@ class application:
         self.start_response = start_response
 
     def __iter__(self):
-        path = self.environ['PATH_INFO']
-        if path == "/hello":
+        # path format: /myblog/*d
+        path = self.environ['PATH_INFO'].split("/")[2]
+        if path == "hello":
             return self.GET_hello()
         else:
             return self.notfound()
