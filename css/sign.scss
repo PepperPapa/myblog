@@ -1,0 +1,11 @@
+$bg-color: #82b9db;
+
+body {
+  background-color: $bg-color;
+}
+
+label {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PepperPapa's Blog</title>
+  <link rel="stylesheet" href="./css/sign.css">
+</head>
+<body>
+  <h1>注册</h1>
+  <form method="POST" action="/myblog/signup">
+    <div>
+      <label for="username">用户名:</label>
+      <input type="text" name="username">
+    </div>
+
+    <div>
+      <label for="password">密码:</label>
+      <input type="password" name="password">
+    </div>
+
+    <div>
+      <label for="verify">再次输入密码:</label>
+      <input type="password" name="verify">
+    </div>
+
+    <div>
+      <input type="submit" value="注册">
+    </div>
+  </form>
+</body>
+</html>
