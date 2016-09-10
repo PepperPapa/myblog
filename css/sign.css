@@ -6,4 +6,7 @@ label {
   width: 120px;
   text-align: right; }
 
+input:not([type=submit]) {
+  width: 300px; }
+
 /*# sourceMappingURL=sign.css.map */
