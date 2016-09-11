@@ -9,4 +9,7 @@ label {
 input:not([type=submit]) {
   width: 300px; }
 
+.error {
+  color: red; }
+
 /*# sourceMappingURL=sign.css.map */

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>PepperPapa's Blog</title>
+  <link rel="icon" href="./images/favicon.png" type="image/x-icon">
   <link rel="stylesheet" href="./css/sign.css">
 </head>
 <body>
@@ -10,22 +11,37 @@
   <form method="POST" action="/myblog/signup">
     <div>
       <label for="username">用户名:</label>
-      <input type="text" name="username">
+      <input type="text"
+             name="username"
+             pattern="[a-zA-Z_][a-zA-Z0-9_]{5,15}"
+             placeholder="长度6-16,首字符不能为数字，字符仅限a-zA-Z0-9_"
+             required>
     </div>
 
     <div>
       <label for="password">密码:</label>
-      <input type="password" name="password">
+      <input type="password"
+             name="password"
+             pattern="\S{6,26}"
+             placeholder="长度6-26的非空字符"
+             required>
     </div>
 
     <div>
       <label for="verify">再次输入密码:</label>
-      <input type="password" name="verify">
+      <input type="password"
+             name="verify"
+             pattern="\S{6,26}"
+             placeholder="长度6-26的非空字符"
+             required>
+      <span class="error"></span>
     </div>
 
     <div>
-      <input type="submit" value="注册">
+      <input id="btn-signup" type="submit" value="注册">
     </div>
   </form>
+
+  <script src="./js/sign.js"></script>
 </body>
 </html>
