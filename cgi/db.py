@@ -50,7 +50,7 @@ class User:
                                     .format(name))
             if (not self.cursor.fetchall()):
                 self.cursor.execute("""INSERT INTO users (NAME, PASSWORD)
-                               VALUES ('{}', '{}')""".format(name, pwd))
+                               VALUES (?, ?)""", (name, pwd))
                 self.conn.commit()
                 self.cursor.execute("SELECT * FROM users WHERE NAME='{}'"
                                         .format(name))
