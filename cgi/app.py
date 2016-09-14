@@ -59,14 +59,13 @@ class application:
 
         self.header('Content-type', 'text/html')
         if new_user:
-            self.status = "301 OK"
-            self.header('Location', '/myblog/index.html?username=%s'
-                                            % new_user["username"])
-            return "".encode("utf-8")
+            // 注册成功通过url传递用户名信息
+            return self.redirect('/myblog/index.html?username=%s'
+                                    % new_user["username"])
         else:
-            # TODO:
-            self.status = "401 Bad Request"
-            return "user already exits.".encode("utf-8")
+            // 注册失败通过url传递错误信息
+            return self.redirect('/myblog/sign.html?error=' +
+                    'user %s already exits.' % user["username"])
 
         # test code
         # html = "<table>\n"
@@ -80,6 +79,11 @@ class application:
         self.status = "404 Not Found"
         self.header('Content-type', 'text/html')
         return "Not Found\n".encode('utf-8')
+
+    def redirect(self, path):
+        self.status = "301 OK"
+        self.header('Location', path)
+        return "".encode("utf-8")
 
     def getBody(self):
         content_length = int(self.environ['CONTENT_LENGTH'])
