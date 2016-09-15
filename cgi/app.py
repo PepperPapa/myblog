@@ -59,11 +59,11 @@ class application:
 
         self.header('Content-type', 'text/html')
         if new_user:
-            // 注册成功通过url传递用户名信息
+            # 注册成功通过url传递用户名信息
             return self.redirect('/myblog/index.html?username=%s'
                                     % new_user["username"])
         else:
-            // 注册失败通过url传递错误信息
+            # 注册失败通过url传递错误信息
             return self.redirect('/myblog/sign.html?error=' +
                     'user %s already exits.' % user["username"])
 
