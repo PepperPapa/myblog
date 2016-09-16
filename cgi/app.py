@@ -10,9 +10,9 @@ else:
 # 使用uwsgi server，必须使用application作为方法名或类名
 class application:
     urls = (
-        ("/myblog/?", "index"),
+        ("/myblog/?(\?.*)?", "index"),
         ("/myblog/newpost/?", "newpost"),
-        ("/myblog/signup(.*)", "signup"),
+        ("/myblog/signup/?(\?.*)?", "signup"),
     )
 
     def __init__(self, environ, start_response):
@@ -34,6 +34,7 @@ class application:
     def delegate(self):
         # path format: /myblog/*
         path = self.environ['PATH_INFO']
+        print("\n\n"+path+"\n\n")
         method = self.environ['REQUEST_METHOD']
 
         for pattern, name in self.urls:
@@ -66,6 +67,17 @@ class application:
         self.header('Content-type', 'text/html')
         return content.encode("utf-8")
 
+    def POST_newpost(self, *args):
+        new_blog = self.getBody()
+        print(new_blog)
+
+    def GET_signup(self, *args):
+        f = open("sign.html")
+        content = f.read()
+        f.close()
+        self.header('Content-type', 'text/html')
+        return content.encode("utf-8")
+
     def POST_signup(self, *args):
         user = self.getBody()
         user = re.match(r'(.*)=(.*)&(.*)=(.*)&(.*)=(.*)', user).groups()
@@ -77,11 +89,10 @@ class application:
         self.header('Content-type', 'text/html')
         if new_user:
             # 注册成功通过url传递用户名信息
-            return self.redirect('/myblog/index.html?username=%s'
-                                    % new_user["username"])
+            return self.redirect('/myblog?username=%s' % new_user["username"])
         else:
             # 注册失败通过url传递错误信息
-            return self.redirect('/myblog/sign.html?error=' +
+            return self.redirect('/myblog/signup?error=' +
                     'user %s already exits.' % user["username"])
 
         # test code
