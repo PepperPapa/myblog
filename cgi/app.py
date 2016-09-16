@@ -10,6 +10,8 @@ else:
 # 使用uwsgi server，必须使用application作为方法名或类名
 class application:
     urls = (
+        ("/myblog/?", "index"),
+        ("/myblog/newpost/?", "newpost"),
         ("/myblog/signup(.*)", "signup"),
     )
 
@@ -48,6 +50,21 @@ class application:
 
     def header(self, name, value):
         self._headers.append((name, value))
+
+    def GET_index(self, *args):
+        # wsgi server会以根目录寻找文件，而不是app.py所在的目录寻找
+        f = open("index.html")
+        content = f.read()
+        f.close()
+        self.header('Content-type', 'text/html')
+        return content.encode("utf-8")
+
+    def GET_newpost(self, *args):
+        f = open("newpost.html")
+        content = f.read()
+        f.close()
+        self.header('Content-type', 'text/html')
+        return content.encode("utf-8")
 
     def POST_signup(self, *args):
         user = self.getBody()
