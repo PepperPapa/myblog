@@ -1,4 +1,4 @@
 **/node_modules/
 *.log
 __pycache__/
-**/.sass-cache/
+.sass-cache/
