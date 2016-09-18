@@ -72,17 +72,26 @@ class Blog:
                       LAST_MODIFIED TEXT NOT NULL);""")
         return (self.conn, self.cursor)
 
-    def newpost(self, *args):
+    def newpost(self, args):
         # 如果posts不存在则首先创建表posts
         self.conn, self.cursor = self.createBlogTable()
         self.cursor.execute("""INSERT INTO posts (ID, SUBJECT, CONETNT, CREATED, LAST_MODIFIED)
-                       VALUES (?, ?, ?, ?, ?)""", *args)
+                       VALUES (?, ?, ?, ?, ?)""", tuple(args))
         self.conn.commit()
-        self.cursor.execute("SELECT * FROM posts WHERE id='{}'"
-                                .format(*args[0]))
-        post = self.cursor.fetchone()
+        self.cursor.execute("SELECT * FROM posts WHERE id={}"
+                                .format(args[0]))
+        query_post = self.cursor.fetchone()
         self.conn.close()
-        return post
+        return query_post
+
+    def getPostById(self, id):
+        # 如果posts不存在则首先创建表posts
+        self.conn, self.cursor = self.createBlogTable()
+        self.cursor.execute("SELECT * FROM posts WHERE id={}"
+                                .format(id))
+        query_post = self.cursor.fetchone()
+        self.conn.close()
+        return query_post
 
     def newpostID(self):
         # 如果posts不存在则首先创建表posts

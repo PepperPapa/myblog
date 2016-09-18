@@ -3,10 +3,10 @@
 import re
 
 if __name__ == '__main__':
-    from blog import blogFront, newPost
+    from blog import blogFront, newPost, postPage
     from sign import signup
 else:
-    from cgi.blog import blogFront, newPost
+    from cgi.blog import blogFront, newPost, postPage
     from cgi.sign import signup
 
 # 使用uwsgi server，必须使用application作为方法名或类名
@@ -15,6 +15,7 @@ class application:
         ("/myblog/?(\?.*)?", blogFront),
         ("/myblog/newpost/?", newPost),
         ("/myblog/signup/?(\?.*)?", signup),
+        ("/myblog/(\d+)", postPage),
     )
 
     def __init__(self, environ, start_response):
@@ -56,7 +57,12 @@ class application:
     def notfound(self):
         self.status = "404 Not Found"
         self.header('Content-type', 'text/html')
-        return "Not Found\n".encode('utf-8')
+        return "404 Not Found\n".encode('utf-8')
+
+    def serverError(self):
+        self.status = "500 Internal Server Error"
+        self.header('Content-type', 'text/html')
+        return "500 Internal Server Error".encode('utf-8')
 
     def redirect(self, path):
         self.status = "301 OK"
