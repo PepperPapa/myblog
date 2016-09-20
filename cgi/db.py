@@ -93,6 +93,14 @@ class Blog:
         self.conn.close()
         return query_post
 
+    def getAllPosts(self):
+        # 如果posts不存在则首先创建表posts
+        self.conn, self.cursor = self.createBlogTable()
+        self.cursor.execute("SELECT * FROM posts ORDER BY ID DESC")
+        query_posts = self.cursor.fetchall()
+        self.conn.close()
+        return query_posts
+
     def newpostID(self):
         # 如果posts不存在则首先创建表posts
         self.conn, self.cursor = self.createBlogTable()
