@@ -11,9 +11,9 @@ else:
 
 POST_TEMPLATE = """
     <article>
-        <h2><a href="{{link}}">{{subject}}</a></h2>
-        <div>{{date}}</div>
-        <div>{{content}}</div>
+        <h2><a href="{link}">{subject}</a></h2>
+        <div>{date}</div>
+        <div>{content}</div>
     </article>
 """
 
@@ -26,10 +26,11 @@ class BlogFront:
             post_html = []
             for post in all_posts:
                 # id, subject, content, created, last_modified
-                post_block = POST_TEMPLATE.replace("{{subject}}", post[1])
-                post_block = post_block.replace("{{date}}", post[4])
-                post_block = post_block.replace("{{content}}", post[2])
-                post_block = post_block.replace("{{link}}", "/myblog/%s" % post[0])
+                post_info = {"subject": post[1],
+                             "date": post[4],
+                             "content": post[2],
+                             "link": "/myblog/%s" % post[0]}
+                post_block = POST_TEMPLATE.format(**post_info)
                 post_html.append(post_block)
             post_html = "\n".join(post_html)
             f = open("index.html")
@@ -47,13 +48,14 @@ class PostPage:
             post_html = f.read()
             f.close()
             # id, subject, content, created, last_modified
-            post_block = POST_TEMPLATE.replace("{{subject}}", post[1])
-            post_block = post_block.replace("{{date}}", post[4])
-            post_block = post_block.replace("{{content}}", post[2])
-            post_block = post_block.replace("{{link}}", "#")
+            post_info = {"subject": post[1],
+                         "date": post[4],
+                         "content": post[2],
+                         "link": "#"}
+            post_block = POST_TEMPLATE.format(**post_info)
 
-            post_html = post_html.replace("{{subject}}", post[1])
-            post_html = post_html.replace("{{post}}", post_block)
+            post_html = post_html.format(**{"subject": post[1],
+                                            "post": post_block})
             return post_html.encode("utf-8")
         else:
             return app.notfound()
