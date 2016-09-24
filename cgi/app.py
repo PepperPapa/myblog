@@ -7,14 +7,14 @@ if __name__ == '__main__':
     from sign import signup
 else:
     from cgi.blog import blogFront, newPost, postPage
-    from cgi.sign import signup
+    from cgi.sign import register
 
 # 使用uwsgi server，必须使用application作为方法名或类名
 class application:
     urls = (
         ("/myblog/?(\?.*)?", blogFront),
         ("/myblog/newpost/?", newPost),
-        ("/myblog/signup/?(\?.*)?", signup),
+        ("/myblog/signup/?(\?.*)?", register),
         ("/myblog/(\d+)", postPage),
     )
 

@@ -9,7 +9,7 @@ else:
 
 class Signup:
     def get(self, app, *args):
-        f = open("sign.html")
+        f = open("signup.html")
         content = f.read()
         f.close()
         app.header('Content-type', 'text/html')
@@ -41,4 +41,4 @@ class Signup:
                     'user %s already exits.' % user["username"])
 
 
-signup = Signup()
+register = Signup()
