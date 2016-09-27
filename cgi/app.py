@@ -4,10 +4,10 @@ import re
 
 if __name__ == '__main__':
     from blog import blogFront, newPost, postPage
-    from sign import signup
+    from sign import signup, login
 else:
     from cgi.blog import blogFront, newPost, postPage
-    from cgi.sign import register
+    from cgi.sign import register, login
 
 # 使用uwsgi server，必须使用application作为方法名或类名
 class application:
@@ -15,6 +15,7 @@ class application:
         ("/myblog/?(\?.*)?", blogFront),
         ("/myblog/newpost/?", newPost),
         ("/myblog/signup/?(\?.*)?", register),
+        ("/myblog/login/?(\?.*)?", login),
         ("/myblog/(\d+)", postPage),
     )
 

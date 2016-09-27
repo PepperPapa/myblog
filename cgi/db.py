@@ -44,6 +44,12 @@ class User:
             # s_: 表示已经加密处理
             return {'username': user[0], 'password': user[1]}
 
+    def userByName(self, name):
+        self.conn, self.cursor = self.createUserTable()
+        self.cursor.execute("SELECT * FROM users WHERE NAME='{}'"
+                                .format(name))
+        return self.cursor.fetchone()
+
 class Blog:
     def createBlogTable(self):
         self.conn, self.cursor = connectDatabase()

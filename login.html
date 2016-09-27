@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PepperPapa's Blog</title>
+  <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="/myblog/css/login.css">
+</head>
+<body>
+  <h1>login</h1>
+  <form method="post" action="/myblog/login">
+    <div>
+      <label for="username">用户名:</label>
+      <input type="text"
+             name="username"
+             placeholder=""
+             required>
+    </div>
+
+    <div>
+      <label for="password">密码:</label>
+      <input type="password"
+             name="password"
+             placeholder=""
+             required>
+    </div>
+    <div class="error error-login"></div>
+
+    <div>
+      <input id="btn-signup" type="submit" value="login">
+    </div>
+  </form>
+
+  <script src="./js/login.js"></script>
+</body>
+</html>

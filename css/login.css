@@ -1,0 +1,12 @@
+label {
+  display: inline-block;
+  width: 120px;
+  text-align: right; }
+
+input:not([type=submit]) {
+  width: 300px; }
+
+.error {
+  color: red; }
+
+/*# sourceMappingURL=login.css.map */

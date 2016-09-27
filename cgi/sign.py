@@ -6,6 +6,7 @@ import hmac
 import json
 import random
 import string
+import time
 
 if __name__ == '__main__':
     import db
@@ -45,6 +46,10 @@ def make_pw_hash(name, pw, salt=None):
 def valid_pw(name, password, h):
     salt = h.split(",")[0]
     return h == make_pw_hash(name, password, salt)
+
+def expires(days):
+    t = time.time() + days * 24 * 60 * 60
+    return time.strftime("%A, %d-%b-%y %H:%M:%S GMT", time.localtime(t))
 
 class Signup:
     def get(self, app, *args):
@@ -94,7 +99,42 @@ class Signup:
                 # user already exists.
                 return app.redirect('/myblog/signup?error=' +
                         'user %s already exits.' % user["username"])
+
+class Login:
+    def get(self, app, *args):
+        f = open("login.html")
+        content = f.read()
+        f.close()
+        app.header('Content-type', 'text/html')
+        return content.encode("utf-8")
+
+    def post(self, app, *args):
+        login_error = False
+        # get username, password from the request body
+        user = app.getBody()
+        user = re.match(r'(.*)=(.*)&(.*)=(.*)', user).groups()
+        user = dict([user[0:2], user[2:4]])
+
+        # validate username, password
+        user_query = db.user.userByName(user["username"])
+        print(user, user_query)
+        if not user_query:
+            login_error = True
+            return app.redirect('/myblog/login?error=' +
+                        'invalid username or password.')
+        else:
+            if valid_pw(user["username"],
+                            user["password"],
+                            user_query[1]):
+                app.header("Set-Cookie",
+                    "user_id={};Expires={}".format(user["username"], expires(60)))
+                return app.redirect('/myblog')
+            else:
+                return app.redirect('/myblog/login?error=' +
+                            'invalid username or password.')
+
 register = Signup()
+login = Login()
 
 if __name__ == '__main__':
     print(make_secure_val("zhongxin"))
