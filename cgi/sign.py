@@ -13,6 +13,18 @@ else:
     from cgi import db
 
 SECRECT = "Think Big, Start Small!".encode("utf-8")
+
+def checkUserName(username):
+    rule = r'[a-zA-Z_][a-zA-Z0-9_]{5,15}'
+    return re.match(rule, username)
+
+def checkPassword(password):
+    rule = r'\S{6,26}'
+    return re.match(rule, password)
+
+def checkVerify(password, verify):
+    return password == verify
+
 def make_secure_val(val):
     return "{}|{}".format(val,
                           hmac.new(SECRECT, val.encode("utf-8")).hexdigest())
@@ -51,23 +63,37 @@ class Signup:
         # return html.encode("utf-8")
 
     def post(self, app, *args):
+        have_error = False
+        # get username, password, verify from the request body
         user = app.getBody()
         user = re.match(r'(.*)=(.*)&(.*)=(.*)&(.*)=(.*)', user).groups()
         user = dict([user[0:2], user[2:4], user[4::]])
-        new_user = db.user.createUser(user["username"],
-                                      user["password"],
-                                      user["verify"])
 
-        app.header('Content-type', 'text/html')
-        if new_user:
-            # 注册成功通过url传递用户名信息
-            return app.redirect('/myblog?username=%s' % new_user["username"])
-        else:
+        # validate username, password, verify
+        if (not checkUserName(user["username"]) or
+           not checkPassword(user["password"]) or
+           not checkVerify(user["password"], user["verify"])):
+           have_error = True
+
+        if have_error:
             # 注册失败通过url传递错误信息
             return app.redirect('/myblog/signup?error=' +
-                    'user %s already exits.' % user["username"])
+                    'username or password have some error.')
+        else:
+            user["password"] = make_pw_hash(user["username"], user["password"])
+            user["verify"] = make_pw_hash(user["username"], user["verify"])
+            new_user = db.user.createUser(user["username"],
+                                          user["password"],
+                                          user["verify"])
 
-
+            app.header('Content-type', 'text/html')
+            if new_user:
+                # 注册成功通过url传递用户名信息
+                return app.redirect('/myblog?username=%s' % new_user["username"])
+            else:
+                # user already exists.
+                return app.redirect('/myblog/signup?error=' +
+                        'user %s already exits.' % user["username"])
 register = Signup()
 
 if __name__ == '__main__':

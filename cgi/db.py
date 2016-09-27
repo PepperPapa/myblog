@@ -10,17 +10,6 @@ def connectDatabase():
     conn = sqlite3.connect("myblog.db")
     return (conn, conn.cursor())
 
-def checkUserName(username):
-    rule = r'[a-zA-Z_][a-zA-Z0-9_]{5,15}'
-    return re.match(rule, username)
-
-def checkPassword(password):
-    rule = r'\S{6,26}'
-    return re.match(rule, password)
-
-def checkVerify(password, verify):
-    return password == verify
-
 """
 用户注册、登录等相关
 """
@@ -40,21 +29,20 @@ class User:
     def createUser(self, name, pwd, verify):
         # 如果users不存在则首先创建表users
         self.conn, self.cursor = self.createUserTable()
-        if (checkUserName(name) and checkPassword(pwd) and
-            checkVerify(pwd, verify)):
-            # 检查name是否已经存在，不存在才能插入值
-            self.cursor.execute("SELECT NAME FROM users WHERE NAME='{}'"
+
+        # 检查name是否已经存在，不存在才能插入值
+        self.cursor.execute("SELECT NAME FROM users WHERE NAME='{}'"
+                                .format(name))
+        if (not self.cursor.fetchall()):
+            self.cursor.execute("""INSERT INTO users (NAME, PASSWORD)
+                           VALUES (?, ?)""", (name, pwd))
+            self.conn.commit()
+            self.cursor.execute("SELECT * FROM users WHERE NAME='{}'"
                                     .format(name))
-            if (not self.cursor.fetchall()):
-                self.cursor.execute("""INSERT INTO users (NAME, PASSWORD)
-                               VALUES (?, ?)""", (name, pwd))
-                self.conn.commit()
-                self.cursor.execute("SELECT * FROM users WHERE NAME='{}'"
-                                        .format(name))
-                user = self.cursor.fetchone()
-                self.conn.close()
-                # s_: 表示已经加密处理
-                return {'username': user[0], 'password': user[1]}
+            user = self.cursor.fetchone()
+            self.conn.close()
+            # s_: 表示已经加密处理
+            return {'username': user[0], 'password': user[1]}
 
 class Blog:
     def createBlogTable(self):
