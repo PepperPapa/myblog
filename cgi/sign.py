@@ -117,7 +117,6 @@ class Login:
 
         # validate username, password
         user_query = db.user.userByName(user["username"])
-        print(user, user_query)
         if not user_query:
             login_error = True
             return app.redirect('/myblog/login?error=' +
@@ -125,16 +124,23 @@ class Login:
         else:
             if valid_pw(user["username"],
                             user["password"],
-                            user_query[1]):
+                            user_query[2]):
                 app.header("Set-Cookie",
-                    "user_id={};Expires={}".format(user["username"], expires(60)))
+                    "user_id={};Expires={}".format(user_query[0], expires(60)))
                 return app.redirect('/myblog')
             else:
                 return app.redirect('/myblog/login?error=' +
                             'invalid username or password.')
 
+class Logout:
+    def get(self, app, *args):
+        app.header("Set-Cookie", "user_id=;")
+        print(app._headers)
+        return app.redirect('/myblog/signup')
+
 register = Signup()
 login = Login()
+logout = Logout()
 
 if __name__ == '__main__':
     print(make_secure_val("zhongxin"))
