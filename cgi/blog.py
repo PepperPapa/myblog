@@ -78,6 +78,7 @@ class PostPage:
                 app.header('Content-type', 'text/html; charset=UTF-8')
                 return post_html.encode("utf-8")
             else:
+                print(post)
                 json_post = json.dumps(post_as_dict(post))
                 app.header('Content-type', 'application/json; charset=UF-8')
                 print(json_post)
@@ -113,10 +114,10 @@ class NewPost:
         new_post.append(self.id)
         self.id += 1    # self.id始终记录最新的post id
         subject = urllib.parse.unquote(match.groups()[0])
-        subject = subject.replace("+", " ").replace("\n", "<br>")
+        subject = subject.replace("+", " ").replace("\r\n", "<br>")
         new_post.append(subject)
         content = urllib.parse.unquote(match.groups()[1])
-        content = content.replace("+", " ").replace("\n", "<br>")
+        content = content.replace("+", " ").replace("\r\n", "<br>")
         new_post.append(content)
         day = time.strftime("%b %d, %Y", time.localtime())
         new_post.append(day)
@@ -126,3 +127,6 @@ class NewPost:
 blogFront = BlogFront()
 newPost = NewPost()
 postPage = PostPage()
+
+if __name__ == '__main__':
+    pass

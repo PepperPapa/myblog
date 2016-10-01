@@ -12,12 +12,12 @@ else:
 # 使用uwsgi server，必须使用application作为方法名或类名
 class application:
     urls = (
-        ("/myblog(:?\.json)?/?(\?.*)?", blogFront),
-        ("/myblog/newpost/?", newPost),
-        ("/myblog/signup/?(\?.*)?", register),
-        ("/myblog/login/?(\?.*)?", login),
-        ("/myblog/logout/?", logout),
-        ("/myblog/(\d+)(:?\.json)?", postPage),
+        ("/myblog(:?\.json$)?/?(\?.*)?$", blogFront),
+        ("/myblog/newpost/?$", newPost),
+        ("/myblog/signup/?(\?.*)?$", register),
+        ("/myblog/login/?(\?.*)?$", login),
+        ("/myblog/logout/?$", logout),
+        ("/myblog/(\d+)(:?\.json)?$", postPage),
     )
 
     def __init__(self, environ, start_response):
