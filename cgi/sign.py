@@ -56,7 +56,7 @@ class Signup:
         f = open("signup.html")
         content = f.read()
         f.close()
-        app.header('Content-type', 'text/html')
+        app.header('Content-type', 'text/html; charset=UTF-8')
         return content.encode("utf-8")
 
         # # test code
@@ -91,7 +91,7 @@ class Signup:
                                           user["password"],
                                           user["verify"])
 
-            app.header('Content-type', 'text/html')
+            app.header('Content-type', 'text/html; charset=UTF-8')
             if new_user:
                 # 注册成功通过url传递用户名信息
                 return app.redirect('/myblog?username=%s' % new_user["username"])
@@ -105,7 +105,7 @@ class Login:
         f = open("login.html")
         content = f.read()
         f.close()
-        app.header('Content-type', 'text/html')
+        app.header('Content-type', 'text/html; charset=UTF-8')
         return content.encode("utf-8")
 
     def post(self, app, *args):

@@ -12,12 +12,12 @@ else:
 # 使用uwsgi server，必须使用application作为方法名或类名
 class application:
     urls = (
-        ("/myblog/?(\?.*)?", blogFront),
+        ("/myblog(:?\.json)?/?(\?.*)?", blogFront),
         ("/myblog/newpost/?", newPost),
         ("/myblog/signup/?(\?.*)?", register),
         ("/myblog/login/?(\?.*)?", login),
         ("/myblog/logout/?", logout),
-        ("/myblog/(\d+)", postPage),
+        ("/myblog/(\d+)(:?\.json)?", postPage),
     )
 
     def __init__(self, environ, start_response):
@@ -25,6 +25,10 @@ class application:
         self.start_response = start_response
         self.status = "200 OK"
         self._headers = []
+        if self.environ["PATH_INFO"].endswith(".json"):
+            self.format = "json"
+        else:
+            self.format = "html"
 
     def __iter__(self):
         result = self.delegate()
