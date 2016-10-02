@@ -72,7 +72,7 @@ class BlogFront:
         # wsgi server会以根目录寻找文件，而不是app.py所在的目录寻找
         if "flush" in app.environ["PATH_INFO"]:
             BLOGS_CACHE.clear()
-            
+
         posts, age = get_posts()
         if posts:
             if app.format == "html":
@@ -93,6 +93,7 @@ class BlogFront:
                 # debug code
                 index_html = index_html.replace("{{age}}", age_str(age))
                 app.header('Content-type', 'text/html; charset=UTF-8')
+                print(app.environ)
                 return index_html.encode("utf-8")
             else:
                 json_posts = json.dumps([post_as_dict(post) for post in posts])

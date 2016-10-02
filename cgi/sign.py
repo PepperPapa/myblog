@@ -59,14 +59,6 @@ class Signup:
         app.header('Content-type', 'text/html; charset=UTF-8')
         return content.encode("utf-8")
 
-        # # test code
-        # html = "<table>\n"
-        # for k, v in app.environ.items():
-        #     html += "<tr><td>{}</td><td>{}</td></tr>\n".format(k, v)
-        # html += "</table>\n"
-        #
-        # return html.encode("utf-8")
-
     def post(self, app, *args):
         have_error = False
         # get username, password, verify from the request body
