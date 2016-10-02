@@ -13,6 +13,7 @@ else:
 class application:
     urls = (
         ("/myblog(:?\.json$)?/?(\?.*)?$", blogFront),
+        ("/myblog/flush/?", blogFront),
         ("/myblog/newpost/?$", newPost),
         ("/myblog/signup/?(\?.*)?$", register),
         ("/myblog/login/?(\?.*)?$", login),

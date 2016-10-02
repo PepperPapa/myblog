@@ -1,1 +1,1 @@
-# myblog
+# my personal blog project
