@@ -6,27 +6,35 @@
         <title>发表新文章</title>
         <link rel="stylesheet" href="/myblog/css/base.css">
         <link rel="stylesheet" href="/myblog/css/blog.css">
+        <link rel="stylesheet" href="/myblog/css/form.css">
+        <link rel="stylesheet" href="/myblog/css/button.css">
     </head>
     <body>
       <header>
-        <h1>pepperPapa's Blog</h1>
+        <div class="header-logo">
+          <img src="/myblog/images/logo.png" alt="logo">
+          <span>pepperPapa's Blog</span>
+        </div>
+        <a class="like-btn" href="/myblog/">index</a>
       </header>
       <main>
-        <h1>发表新文章</h1>
         <div class="new-post">
           <form method="post" action="/myblog/newpost">
             <div>
-              <label for="subject">标题:</label>
-              <input type="text" name="subject" required>
+              <label for="subject">标题</label>
+              <input class="post post-title" type="text" name="subject"
+                placeholder="Title" required>
             </div>
 
             <div>
-              <label for="content">内容:</label>
-              <textarea name="content" required></textarea>
+              <label for="content">内容</label>
+              <textarea class="post post-content" name="content"
+                placeholder="tell your story..."
+                required></textarea>
             </div>
 
             <div>
-              <input id="btn-signup" type="submit" value="发布">
+              <input class="btn btn-main" type="submit" value="发布">
             </div>
           </form>
         </div>

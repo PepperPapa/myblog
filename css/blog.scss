@@ -1,24 +1,30 @@
 header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #263d36;
-  background-image: url("/myblog/images/header-bg.jpg");
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: cover;
   line-height: 1.2;
-  padding: 10vw 2em;
+  padding: 2em 4em;
   text-align: center;
-  img {
-    display: inline-block;
-    height: 120px;
-    vertical-align: top;
-    width: 120px;
-  }
-  h1 {
-    color: #fff;
-    font-size: 2.5em;
-    font-weight: 300px;
+  .header-logo {
+    display: flex;
+    align-items: center;
+    img {
+      display: inline-block;
+      height: 60px;
+      vertical-align: top;
+      width: 60px;
+    }
+    span {
+      color: #fff;
+      font-size: 1.5em;
+      font-weight: 300px;
+    }
   }
   a {
+    color: #78f576;
+  }
+  a.like-btn {
     border: 1px solid #e91c4f;
     border-radius: 290486px;
     color: #fff;
@@ -28,15 +34,18 @@ header {
     text-transform: uppercase;
     transition: none 200ms ease-out;
     transition-property: color, background;
+    &:hover {
+      background-color: #e81c4f;
+    }
   }
-  a:hover {
-    background-color: #e81c4f;
+  span {
+    color: #fff;
+    font-size: 1.6em;
   }
 }
 
 article {
   border: 1px solid #e0e0e0;
-  // box-shadow: 0 5px 4px -4px lightgray;
   border-radius: 4px;
   margin: 1em 0;
   padding: 1em 1em;

@@ -4,27 +4,44 @@
   <meta charset="UTF-8">
   <title>PepperPapa's Blog</title>
   <link rel="icon" href="./images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="/myblog/css/base.css">
+  <link rel="stylesheet" href="/myblog/css/blog.css">
   <link rel="stylesheet" href="/myblog/css/login.css">
+  <link rel="stylesheet" href="/myblog/css/form.css">
+  <link rel="stylesheet" href="/myblog/css/button.css">
 </head>
 <body>
-  <h1>login</h1>
-  <form method="post" action="/myblog/login">
-    <div>
-      <label for="username">用户名:</label>
-      <input type="text" name="username" required>
+  <header>
+    <div class="header-logo">
+      <img src="/myblog/images/logo.png" alt="logo">
+      <span>PepperPapa's Blog!</span>
     </div>
-
     <div>
-      <label for="password">密码:</label>
-      <input type="password" name="password" required>
+      <span>login page</span>
     </div>
-    <div class="error error-login"></div>
+  </header>
+  <main>
+    <form method="post" action="/myblog/login">
+      <div>
+        <label for="username">用户名:</label>
+        <input class="" type="text" name="username" required>
+      </div>
 
-    <div>
-      <input id="btn-signup" type="submit" value="login">
-    </div>
-  </form>
+      <div>
+        <label for="password">密码:</label>
+        <input class="" type="password" name="password" required>
+      </div>
+      <div class="error error-login"></div>
 
+      <div>
+        <input class="btn btn-main" type="submit" value="login">
+      </div>
+    </form>
+  </main>
+  <footer>
+    <p>by <a href="https://github.com/PepperPapa" alt="github page">
+            PepperPapa</a> | zhongxin2506@outlook.com</p>
+  </footer>
   <script src="./js/login.js"></script>
 </body>
 </html>

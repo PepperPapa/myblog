@@ -94,16 +94,16 @@ class BlogFront:
                 f.close()
                 index_html = index_html.replace("{{posts}}", post_html)
                 # login-area
-                # cookie = app.readCookie()
                 if login.user:
                     login_area = """
-                    <a href="#">{}</a>
-                    <a href="/myblog/logout">logout</a>
+                    <a href="/myblog/newpost">Write a Story</a>
+                    <a class="like-btn" href="#">{}</a>
+                    <a class="like-btn" href="/myblog/logout">logout</a>
                     """.format(login.user)
                 else:
                     login_area = """
-                    <a href="/myblog/login">login</a>
-                    <a href="/myblog/signup">signup</a>
+                    <a class="like-btn" href="/myblog/login">login</a>
+                    <a class="like-btn" href="/myblog/signup">signup</a>
                     """
                 index_html = index_html.replace("{{login-area}}", login_area)
 
