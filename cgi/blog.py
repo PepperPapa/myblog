@@ -94,7 +94,9 @@ class BlogFront:
                 f.close()
                 index_html = index_html.replace("{{posts}}", post_html)
                 # login-area
-                if login.user:
+                cookie = app.readCookie()
+                print(cookie)
+                if login.user and cookie["user_id"]:
                     login_area = """
                     {}(<a href="/myblog/logout">logout</a>)
                     """.format(login.user)

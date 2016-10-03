@@ -80,3 +80,6 @@ class application:
         content_length = int(self.environ['CONTENT_LENGTH'])
         content = self.environ['wsgi.input'].read(content_length).decode('utf-8')
         return content
+
+    def readCookie(self):
+        return dict([self.environ["HTTP_COOKIE"].split("=")])

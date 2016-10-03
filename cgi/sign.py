@@ -51,12 +51,7 @@ def expires(days):
     t = time.time() + days * 24 * 60 * 60
     return time.strftime("%A, %d-%b-%y %H:%M:%S GMT", time.localtime(t))
 
-class User:
-    def __init__(self):
-        # if login sucessfully, self.user equal username
-        self.user = None
-
-class Signup(User):
+class Signup:
     def get(self, app, *args):
         f = open("signup.html")
         content = f.read()
@@ -97,7 +92,11 @@ class Signup(User):
                 return app.redirect('/myblog/signup?error=' +
                         'user %s already exits.' % user["username"])
 
-class Login(User):
+class Login:
+    def __init__(self):
+        # login sucessfully, self.user equal username
+        self.user = None
+
     def get(self, app, *args):
         f = open("login.html")
         content = f.read()
@@ -132,11 +131,8 @@ class Login(User):
                 return app.redirect('/myblog/login?error=' +
                             'invalid username or password.')
 
-class Logout(User):
+class Logout:
     def get(self, app, *args):
-        # after logout, login.user equal None
-        login.user = None
-
         app.header("Set-Cookie", "user_id=;")
         return app.redirect('/myblog/signup')
 
