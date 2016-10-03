@@ -97,11 +97,12 @@ class BlogFront:
                 # cookie = app.readCookie()
                 if login.user:
                     login_area = """
-                    {}(<a href="/myblog/logout">logout</a>)
+                    <a href="#">{}</a>
+                    <a href="/myblog/logout">logout</a>
                     """.format(login.user)
                 else:
                     login_area = """
-                    <a href="/myblog/login">login</a> |
+                    <a href="/myblog/login">login</a>
                     <a href="/myblog/signup">signup</a>
                     """
                 index_html = index_html.replace("{{login-area}}", login_area)
