@@ -133,6 +133,9 @@ class Login:
 
 class Logout:
     def get(self, app, *args):
+        # after logout, set login.user equal None
+        login.user = None
+        print(login.user)
         app.header("Set-Cookie", "user_id=;")
         return app.redirect('/myblog/signup')
 
