@@ -9,8 +9,11 @@ import logging
 
 if __name__ == '__main__':
     import db
+    from sign import login
 else:
     from cgi import db
+    from cgi.sign import login
+
 
 POST_TEMPLATE = """
     <article>
@@ -90,10 +93,22 @@ class BlogFront:
                 index_html = f.read()
                 f.close()
                 index_html = index_html.replace("{{posts}}", post_html)
+                # login-area
+                if login.user:
+                    login_area = """
+                    {}(<a href="/myblog/logout">logout</a>)
+                    """.format(login.user)
+                else:
+                    login_area = """
+                    <a href="/myblog/login">login</a> |
+                    <a href="/myblog/signup">signup</a>
+                    """
+                index_html = index_html.replace("{{login-area}}", login_area)
+
                 # debug code
                 index_html = index_html.replace("{{age}}", age_str(age))
+
                 app.header('Content-type', 'text/html; charset=UTF-8')
-                print(app.environ)
                 return index_html.encode("utf-8")
             else:
                 json_posts = json.dumps([post_as_dict(post) for post in posts])
@@ -129,10 +144,8 @@ class PostPage:
                 app.header('Content-type', 'text/html; charset=UTF-8')
                 return post_html.encode("utf-8")
             else:
-                print(post)
                 json_post = json.dumps(post_as_dict(post))
                 app.header('Content-type', 'application/json; charset=UF-8')
-                print(json_post)
                 return json_post.encode("utf-8")
         else:
             return app.notfound()
