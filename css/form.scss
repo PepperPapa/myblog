@@ -1,4 +1,19 @@
 // styles form forms
+form {
+  margin-top: 5em;
+  text-align: center;
+}
+
+.input {
+  margin: .2em 0 .2em 0;
+  padding: 1em 2em;
+  padding: 10px 15px;
+  width: 15em;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  font-size: 1.6em;
+}
+
 .post {
   margin: 0;
   padding: 10px 15px;

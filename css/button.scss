@@ -13,8 +13,18 @@
 
 .btn-main {
   background-color: #6b0;
+  &:hover {
+    background-color: #6d0;
+  }
 }
 
 .btn-cancel {
   background-color: #c00;
+  &:hover {
+    background-color: #b00;
+  }
+}
+
+.btn-wrapper {
+  margin: 1em 0;
 }

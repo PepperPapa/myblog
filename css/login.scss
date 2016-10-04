@@ -1,18 +1,4 @@
-$bg-color: #82b9db;
-
-body {
-  // background-color: $bg-color;
-}
-
-label {
-  display: inline-block;
-  width: 120px;
-  text-align: right;
-}
-
-input:not([type=submit]) {
-  width: 300px;
-}
+// styles for login page
 
 .error {
   color: red;
