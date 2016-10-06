@@ -4,22 +4,26 @@
         <meta charset="UTF-8"/>
 	      <link rel="icon" href="./images/favicon.png" type="image/x-icon">
         <title>{subject}</title>
+        <link rel="stylesheet" href="/myblog/css/base.css">
         <link rel="stylesheet" href="/myblog/css/blog.css">
     </head>
     <body>
     	<header>
-    	  <h1><a href="/myblog/">pepperPapa's Blog</a></h1>
+        <div class="header-logo">
+          <img src="/myblog/images/logo.png" alt="logo">
+          <span>pepperPapa's Blog</span>
+        </div>
+        <a class="like-btn" href="/myblog/">index</a>
     	</header>
       <main>
         <section>
           {post}
         </section>
         <aside>
-
         </aside>
       </main>
       <footer>
-        <p>by pepperPapa | zhongxin2506@outlook.com</p>
+        <p>by pepperPapa | zhongxin2506@outlook.com | {age}</p>
       </footer>
     </body>
 </html>

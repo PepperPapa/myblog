@@ -1,0 +1,33 @@
+form {
+  margin-top: 5em;
+  text-align: center; }
+
+.input {
+  margin: .2em 0 .2em 0;
+  padding: 1em 2em;
+  padding: 10px 15px;
+  width: 15em;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  font-size: 1.6em; }
+
+.post {
+  margin: 0;
+  padding: 10px 15px;
+  width: 100%;
+  border: none;
+  font-size: 1.6em; }
+
+label {
+  display: none; }
+
+.post-title {
+  margin: 1em 0 15px 0; }
+
+.post-content {
+  min-height: 15em;
+  font-family: inherit;
+  font-size: 1em;
+  resize: vertical; }
+
+/*# sourceMappingURL=form.css.map */

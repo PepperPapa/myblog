@@ -1,0 +1,30 @@
+// styles for buttons
+.btn {
+  padding: .3em .8em;
+  border: 1px solid rgba(0,0,0,.1);
+  background: #58a linear-gradient(hsla(0,0%,100%,.2), transparent);
+  border-radius: .2em;
+  box-shadow: 0 .05em .25em rgba(0,0,0,.5);
+  color: white;
+  text-shadow: 0 -.05em .05em rgba(0,0,0,.5);
+  font-size: 125%;
+  line-height: 1.5;
+}
+
+.btn-main {
+  background-color: #6b0;
+  &:hover {
+    background-color: #6d0;
+  }
+}
+
+.btn-cancel {
+  background-color: #c00;
+  &:hover {
+    background-color: #b00;
+  }
+}
+
+.btn-wrapper {
+  margin: 1em 0;
+}

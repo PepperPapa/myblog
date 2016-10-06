@@ -22,7 +22,8 @@ class User:
 
         if not 'users' in table_list:
             self.cursor.execute("""CREATE TABLE users
-                     (NAME TEXT PRIMARY KEY NOT NULL,
+                     (ID INTEGER PRIMARY KEY NOT NULL,
+                      NAME TEXT NOT NULL,
                       PASSWORD TEXT NOT NULL);""")
         return (self.conn, self.cursor)
 
@@ -34,15 +35,16 @@ class User:
         self.cursor.execute("SELECT NAME FROM users WHERE NAME='{}'"
                                 .format(name))
         if (not self.cursor.fetchall()):
-            self.cursor.execute("""INSERT INTO users (NAME, PASSWORD)
-                           VALUES (?, ?)""", (name, pwd))
+            id = time.time() * 10000000
+            self.cursor.execute("""INSERT INTO users (ID, NAME, PASSWORD)
+                           VALUES (?, ?, ?)""", (id, name, pwd))
             self.conn.commit()
             self.cursor.execute("SELECT * FROM users WHERE NAME='{}'"
                                     .format(name))
             user = self.cursor.fetchone()
             self.conn.close()
             # s_: 表示已经加密处理
-            return {'username': user[0], 'password': user[1]}
+            return {'id': user[0], 'username': user[1], 'password': user[2]}
 
     def userByName(self, name):
         self.conn, self.cursor = self.createUserTable()
@@ -90,7 +92,7 @@ class Blog:
     def getAllPosts(self):
         # 如果posts不存在则首先创建表posts
         self.conn, self.cursor = self.createBlogTable()
-        self.cursor.execute("SELECT * FROM posts ORDER BY ID DESC")
+        self.cursor.execute("SELECT * FROM posts ORDER BY ID DESC LIMIT 15")
         query_posts = self.cursor.fetchall()
         self.conn.close()
         return query_posts

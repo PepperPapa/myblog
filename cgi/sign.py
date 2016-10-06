@@ -56,16 +56,8 @@ class Signup:
         f = open("signup.html")
         content = f.read()
         f.close()
-        app.header('Content-type', 'text/html')
+        app.header('Content-type', 'text/html; charset=UTF-8')
         return content.encode("utf-8")
-
-        # # test code
-        # html = "<table>\n"
-        # for k, v in app.environ.items():
-        #     html += "<tr><td>{}</td><td>{}</td></tr>\n".format(k, v)
-        # html += "</table>\n"
-        #
-        # return html.encode("utf-8")
 
     def post(self, app, *args):
         have_error = False
@@ -91,7 +83,7 @@ class Signup:
                                           user["password"],
                                           user["verify"])
 
-            app.header('Content-type', 'text/html')
+            app.header('Content-type', 'text/html; charset=UTF-8')
             if new_user:
                 # 注册成功通过url传递用户名信息
                 return app.redirect('/myblog?username=%s' % new_user["username"])
@@ -101,11 +93,15 @@ class Signup:
                         'user %s already exits.' % user["username"])
 
 class Login:
+    def __init__(self):
+        # login sucessfully, self.user equal username
+        self.user = None
+
     def get(self, app, *args):
         f = open("login.html")
         content = f.read()
         f.close()
-        app.header('Content-type', 'text/html')
+        app.header('Content-type', 'text/html; charset=UTF-8')
         return content.encode("utf-8")
 
     def post(self, app, *args):
@@ -117,7 +113,6 @@ class Login:
 
         # validate username, password
         user_query = db.user.userByName(user["username"])
-        print(user, user_query)
         if not user_query:
             login_error = True
             return app.redirect('/myblog/login?error=' +
@@ -125,16 +120,28 @@ class Login:
         else:
             if valid_pw(user["username"],
                             user["password"],
-                            user_query[1]):
+                            user_query[2]):
                 app.header("Set-Cookie",
-                    "user_id={};Expires={}".format(user["username"], expires(60)))
+                    "user_id={};Expires={}".format(user_query[0], expires(60)))
+                # login sucessfully, self.user equal username
+                self.user = user["username"]
+
                 return app.redirect('/myblog')
             else:
                 return app.redirect('/myblog/login?error=' +
                             'invalid username or password.')
 
+class Logout:
+    def get(self, app, *args):
+        # after logout, set login.user equal None
+        login.user = None
+
+        app.header("Set-Cookie", "user_id=;")
+        return app.redirect('/myblog/signup')
+
 register = Signup()
 login = Login()
+logout = Logout()
 
 if __name__ == '__main__':
     print(make_secure_val("zhongxin"))

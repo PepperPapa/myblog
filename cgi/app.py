@@ -4,19 +4,21 @@ import re
 
 if __name__ == '__main__':
     from blog import blogFront, newPost, postPage
-    from sign import signup, login
+    from sign import signup, login, logout
 else:
     from cgi.blog import blogFront, newPost, postPage
-    from cgi.sign import register, login
+    from cgi.sign import register, login, logout
 
 # 使用uwsgi server，必须使用application作为方法名或类名
 class application:
     urls = (
-        ("/myblog/?(\?.*)?", blogFront),
-        ("/myblog/newpost/?", newPost),
-        ("/myblog/signup/?(\?.*)?", register),
-        ("/myblog/login/?(\?.*)?", login),
-        ("/myblog/(\d+)", postPage),
+        ("/myblog(:?\.json$)?/?(\?.*)?$", blogFront),
+        ("/myblog/flush/?", blogFront),
+        ("/myblog/newpost/?$", newPost),
+        ("/myblog/signup/?(\?.*)?$", register),
+        ("/myblog/login/?(\?.*)?$", login),
+        ("/myblog/logout/?$", logout),
+        ("/myblog/(\d+)(:?\.json)?$", postPage),
     )
 
     def __init__(self, environ, start_response):
@@ -24,6 +26,10 @@ class application:
         self.start_response = start_response
         self.status = "200 OK"
         self._headers = []
+        if self.environ["PATH_INFO"].endswith(".json"):
+            self.format = "json"
+        else:
+            self.format = "html"
 
     def __iter__(self):
         result = self.delegate()
@@ -74,3 +80,6 @@ class application:
         content_length = int(self.environ['CONTENT_LENGTH'])
         content = self.environ['wsgi.input'].read(content_length).decode('utf-8')
         return content
+
+    def readCookie(self):
+        return dict([self.environ["HTTP_COOKIE"].split("=")])

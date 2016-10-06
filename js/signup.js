@@ -1,7 +1,7 @@
 // wait for all html load ready
 window.onload = function() {
   // 两次输入密码是否相同验证
-  var $btn_signup = document.getElementById("btn-signup");
+  var $btn_signup = document.querySelector(".btn-main");
   var $pwd_verify = document.querySelector("input[name=verify]");
 
   $btn_signup.addEventListener("click", function() {
